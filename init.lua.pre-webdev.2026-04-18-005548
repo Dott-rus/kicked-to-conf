@@ -407,10 +407,6 @@ require('lazy').setup({
     build = 'pnpm add -g live-server',
     cmd = { 'LiveServerStart', 'LiveServerStop' },
     config = true,
-    init = function()
-      vim.keymap.set('n', '<leader>ls', '<cmd>LiveServerStart<CR>', { desc = '[L]ive [S]erver Start' })
-      vim.keymap.set('n', '<leader>lS', '<cmd>LiveServerStop<CR>', { desc = '[L]ive [S]erver Stop' })
-    end,
   },
 
   -- LSP Plugins
@@ -582,10 +578,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
-        html = {},
-        cssls = {},
-        ts_ls = {},
+        -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -625,13 +618,6 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'prettier',
-        'html-lsp',
-        'css-lsp',
-        'typescript-language-server',
-        'pyright',
-        'black',
-        'isort',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -678,13 +664,11 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { 'isort', 'black' },
-        html = { 'prettier' },
-        css = { 'prettier' },
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
-        json = { 'prettier' },
-        markdown = { 'prettier' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
     },
   },
@@ -813,30 +797,12 @@ require('lazy').setup({
     'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      require('tokyonight').setup {
-        style = 'night',
-        transparent = true,
-        styles = {
-          sidebars = 'transparent',
-          floats = 'dark',
-        },
-        on_colors = function(c)
-          c.bg = '#171717'
-          c.bg_dark = '#141414'
-          c.bg_sidebar = '#171717'
-          c.bg_float = '#202020'
-          c.border = '#3a3a3a'
-          c.fg = '#e2e2e2'
-          c.comment = '#8f8f8f'
-          c.blue = '#bdbdbd'
-          c.cyan = '#b7c7c7'
-          c.magenta = '#c6bdc9'
-          c.green = '#b8c7b8'
-          c.yellow = '#cdbb9a'
-          c.red = '#c98a8a'
-        end,
-      }
-      vim.cmd.colorscheme 'tokyonight'
+      -- Load the colorscheme here.
+      -- Like many other themes, this one has different styles, and you could load
+      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+      vim.cmd.colorscheme 'tokyonight-night'
+
+      -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
   },
