@@ -253,6 +253,31 @@ require('lazy').setup({
     },
   },
 
+  -- OBSIDIAN
+  {
+    'obsidian-nvim/obsidian.nvim',
+    version = '*',
+    ft = 'markdown',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    init = function()
+      vim.opt.conceallevel = 2
+    end,
+    opts = {
+      legacy_commands = false,
+      workspaces = {
+        {
+          name = 'Notes',
+          path = '~/Notes',
+        },
+      },
+      picker = {
+        name = 'telescope.nvim',
+      },
+    },
+  },
+
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })
